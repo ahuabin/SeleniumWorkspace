@@ -1,0 +1,76 @@
+package org.openqa.selenium.example;
+
+import java.util.concurrent.TimeUnit;
+import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+public class Login {
+	// main function args must be in this order - [environment] [email] [password]
+	public static void main (String[] args) {
+		// define number of arguments that should be passed in
+		int argsCount = 3;
+		
+		// check that correct number of arguments are passed in
+		if (args.length != argsCount) {
+			System.out.println("Proper usage is: java -jar bat.jar [environment] [email] [password]");
+			System.exit(0);
+		}
+		
+		// get environment selection
+		String environment = args[0];
+		
+		System.out.println(environment);
+		
+		// check that environment selection is valid
+		if ((environment != "production") && (environment != "webdev6") && (environment != "webdev7")) {
+			System.out.println("Select an environment from the following: \"production\", \"webdev6\", \"webdev7\"");
+			System.exit(0);
+		}
+		
+		// get login credentials
+		String email = args[1];
+		String pwd = args[2];
+		
+		WebDriver driver = new FirefoxDriver();
+		
+		// navigate to the correct login page based on environment selection
+		switch (environment) {
+		case "production":
+			driver.get("https://home.binwise.com/");
+			new WebDriverWait(driver,10);
+			driver.findElement(By.id("menu-item-32")).click();
+			break;
+		case "webdev6":
+			driver.get("https://webdev6.binwise.dev/");
+			new WebDriverWait(driver,10);
+			driver.findElement(By.id("A5")).click();
+			break;
+		case "webdev7":
+			driver.get("https://webdev7.binwise.dev/");
+			new WebDriverWait(driver,100);
+			driver.findElement(By.id("A5")).click();
+			break;
+		}
+		
+		// submit login credentials
+		new WebDriverWait(driver,10);
+		String loginScreenTitle = driver.getTitle();
+		WebElement loginField = driver.findElement(By.id("ctl00_ContentPlaceHolder3_txtEmail"));
+		WebElement pwdField = driver.findElement(By.id("ctl00_ContentPlaceHolder3_txtPassword"));
+		loginField.sendKeys(email);
+		pwdField.sendKeys(pwd);
+		driver.findElement(By.id("ctl00_ContentPlaceHolder3_btnsignin")).click();
+		
+		// check if login was successful (checking whether we're still on the same page seemed like the easiest route for now since I don't really know how HTML forms work)
+		new WebDriverWait(driver,10);
+		if (driver.getTitle() == loginScreenTitle) {
+			System.out.println("Please check your login credentials and try again.");
+			driver.close();
+			System.exit(0);
+		}
+	}
+}

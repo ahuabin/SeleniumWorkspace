@@ -1,0 +1,37 @@
+package org.openqa.selenium.example;
+
+import java.util.concurrent.TimeUnit;
+import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+public class Login {
+	public static void main (String[] args) {
+		WebDriver driver = new FirefoxDriver();
+		
+		// Choose 'P', '6', or '7' here to select environment
+		char env = 'P';
+		
+		switch (env) {
+		case 'P':
+			driver.get("https://home.binwise.com/");
+			new WebDriverWait(driver,10);
+			WebElement element = driver.findElement(By.id("A5"));
+			element.click();
+			break;
+		case '6':
+			driver.get("https://webdev6.binwise.dev/");
+			new WebDriverWait(driver,10);
+			WebElement element6 = driver.findElement(By.id("A5"));
+			element6.click();
+		case '7':
+			driver.get("https://webdev7.binwise.dev/");
+			new WebDriverWait(driver,10);
+			WebElement element7 = driver.findElement(By.id("A5"));
+			element7.click();
+		}
+	}
+}

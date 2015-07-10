@@ -1,0 +1,7 @@
+package org.openqa.selenium.example;
+
+public class NavigationBAT {
+	// values
+	private String environment;
+	
+}

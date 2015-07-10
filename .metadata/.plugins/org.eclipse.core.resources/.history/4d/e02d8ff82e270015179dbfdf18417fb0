@@ -1,0 +1,23 @@
+package org.openqa.selenium.example;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+public class Login {
+	public static void main (String[] args) {
+		WebDriver driver = new FirefoxDriver();
+		
+		driver.get("https://home.binwise.com/");
+		// driver.get("https://webdev7.binwise.dev/");
+		
+		IWait<IWebDriver> wait = new OpenQA.Selenium.Support.UI.WebDriverWait(driver, TimeSpan.FromSeconds(30.00));
+		wait.Until(driver1 => ((IJavaScriptExecutor)driver).ExecuteScript("return document.readyState").Equals("complete"));
+		
+		WebElement element = driver.findElement(By.partialLinkText("Client Login"));
+		// element.click();
+	}
+}
